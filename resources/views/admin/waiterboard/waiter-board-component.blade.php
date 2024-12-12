@@ -1,6 +1,4 @@
-<div>
-
-    <!-- Content Wrapper. Contains page content -->
+<div class="px-4">
     <div class="content-wrapper kanban">
       <section class="content-header">
         <div class="container-fluid">

@@ -20,12 +20,12 @@ class FoodComponent extends Component
     public $price;
     public $image_path;
     public $saved_image;
-    public $category_id;    
+    public $category_id = null;    
 
     public $editingname;
     public $editingprice;
     public $editingimage;
-    public $editingcategory_id;  
+    public $editingcategory_id = null;  
 
     public $editmodal = false;
     public $createmodal = false;
@@ -37,30 +37,27 @@ class FoodComponent extends Component
         return view('admin.food.food-component',compact('foods'))->layout('components.layouts.admin');
     }
 
-
-    public function store(){
-
+    public function store()
+    {
         $this->validate([
             'name' => 'required|string|max:255',
             'price' => 'required',
             'image_path' => 'image|max:2048',
-            'category_id' => 'required',
+            'category_id' => 'required|exists:categories,id',
         ]);
-
-        // $validated = $this->validate();
 
         $filePath = $this->image_path->store('food', 'public');
         $this->saved_image = $filePath;
-        // dd($this->saved_image);
+
         Food::create([
-            'name' => $this->name,  
+            'name' => $this->name,
             'price' => $this->price,
             'image_path' => $filePath,
-            'category_id' => $this->category_id 
+            'category_id' => $this->category_id,
         ]);
 
-        $this->reset();
-        session()->flash('success','Food Created Successfully');
+        $this->reset(['name', 'price', 'image_path', 'category_id']);
+        session()->flash('success', 'Food Created Successfully');
     }
 
     public function delete(Food $food){
@@ -76,32 +73,30 @@ class FoodComponent extends Component
 
     }
 
-    public function updatefood(){
-
-        // dd($this->editingimage);
+    public function updatefood()
+    {
         $this->validate([
             'editingname' => 'required|string|max:255',
             'editingprice' => 'required',
             'editingimage' => 'image|max:2048',
-            'editingcategory_id' => 'required',
+            'editingcategory_id' => 'required|exists:categories,id',
         ]);
 
         $food = Food::find($this->food_id);
 
-        if($this->editingimage){
+        if ($this->editingimage) {
             $filePath = $this->editingimage->store('food', 'public');
             $this->saved_image = $filePath;
         }
 
-
         $food->update([
             'name' => $this->editingname,
-            'price' => $this->editingprice, 
+            'price' => $this->editingprice,
             'category_id' => $this->editingcategory_id,
-            'image_path' => $filePath ?? '',
+            'image_path' => $filePath ?? $food->image_path,
         ]);
 
-        $this->reset();
-        session()->flash('success','Food Updated Successfully');
+        $this->reset(['editingname', 'editingprice', 'editingimage', 'editingcategory_id']);
+        session()->flash('success', 'Food Updated Successfully');
     }   
 }

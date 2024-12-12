@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Panel</title>
 
   @livewireStyles
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=fallback" rel="stylesheet">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-  <!-- Theme style -->
+  <!-- AdminLTE Theme -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-  <!-- Include Select2 CSS -->
-  {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
-
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ asset('dist/css/custom-styles.css') }}">
 </head> 
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
 
-
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-dark">
-    <!-- Left navbar links -->
+  <nav class="main-header navbar navbar-expand navbar-light bg-light border-bottom shadow-sm">
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -34,101 +29,101 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="/user-page" wire:navigate class="nav-link">User Page</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block ">
-        <a href="/logout" class="nav-link">Logout</a>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/logout" class="nav-link text-danger">Logout</a>
       </li>
     </ul>
   </nav>
-  <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Sidebar -->
+  <aside class="main-sidebar bg-dark text-light elevation-4">
     <a href="#" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="Admin Logo" class="brand-image img-circle">
       <span class="brand-text font-weight-light">Food Management</span>
     </a>
-
-    <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-          <span>Someone</span>
+          <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Alexander</a>
         </div>
       </div>
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <a href="/users" wire:navigate class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>Users</p>
-          </a>
-
-          <a href="/attendance" wire:navigate class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>Attendance</p>
-          </a>
-
-          <a href="/waiterboard" wire:navigate class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>Waiter Board</p>
-          </a>
-
-          <a href="/sections" wire:navigate class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>Sections</p>
-          </a>
-
-          <a href="/workers" wire:navigate class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>Workers</p>
-          </a>
-          
-          <a href="/categories" wire:navigate class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>Categories</p>
-          </a>
-
-          <a href="/foods" wire:navigate  class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>Foods</p>
-          </a>
-
-          <a href="/orders" wire:navigate class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>Orders</p>
-          </a>
+        <ul class="nav nav-pills nav-sidebar flex-column">
+          <li class="nav-item">
+            <a href="/users" wire:navigate class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>Users</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/attendance" wire:navigate class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>Attendance</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/waiterboard" wire:navigate class="nav-link">
+              <i class="nav-icon fas fa-chalkboard"></i>
+              <p>Waiter Board</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/sections" wire:navigate class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>Sections</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/workers" wire:navigate class="nav-link">
+              <i class="nav-icon fas fa-user-tie"></i>
+              <p>Workers</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/categories" wire:navigate class="nav-link">
+              <i class="nav-icon fas fa-tags"></i>
+              <p>Categories</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/foods" wire:navigate class="nav-link">
+              <i class="nav-icon fas fa-utensils"></i>
+              <p>Foods</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/orders" wire:navigate class="nav-link">
+              <i class="nav-icon fas fa-receipt"></i>
+              <p>Orders</p>
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
   </aside>
 
-  {{$slot}}
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+    {{$slot}}
+  </div>
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">fast.io</a>.</strong>
-    All rights reserved.
+  <!-- Footer -->
+  <footer class="main-footer bg-light text-dark">
+    <strong>&copy; 2024 <a href="#">Food Management</a>.</strong> All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      <b>Version</b> 1.0.0
     </div>
   </footer>
 </div>
-<!-- ./wrapper -->
-@livewireScripts
-<script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v1.x.x/dist/livewire-sortable.js"></script>
-<!-- REQUIRED SCRIPTS -->
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- overlayScrollbars -->
-<script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.js') }}"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> --}}
-<!-- Include Select2 JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
 
+<!-- Scripts -->
+@livewireScripts
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<script src="{{ asset('dist/js/adminlte.js') }}"></script>
 </body>
 </html>

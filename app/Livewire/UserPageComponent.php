@@ -17,6 +17,7 @@ class UserPageComponent extends Component
     public $filtercategory_id;
     public $foods;
     public $foodCount;
+    public $orders;
 
     public function render()
     {
@@ -31,6 +32,7 @@ class UserPageComponent extends Component
         $this->foodCount = count($foods); 
 
         $this->categories = Category::all();
+        $this->orders = session('foods', []);
         return view('user.userPage.user-page-component');
     }
 

@@ -1,163 +1,124 @@
 <div>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper kanban">
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-6">
-            <h1>Order Board</h1>
-          </div>
-          <div class="col-sm-6 d-none d-sm-block">
-          </div>
+    <!-- Page Header -->
+    <section class="content-header bg-primary text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h1>Order Management Board</h1>
+                    <p>Monitor and update the status of customer orders in real time</p>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <section class="content pb-3">
-      <div class="container-fluid h-100">
-
-        <div class="card card-row card-secondary">
-          <div class="card-header">
-            <h3 style="color: rgb(231, 227, 7)" class="card-title">
-              Waiting
-            </h3>
-          </div>
-          <div class="card-body">
-            @foreach ($orders->where('status', 'waiting') as $order)
-                <div class="card card-info card-outline">
-                    <div class="card-header">
-                        <h5 class="card-title">Order {{$order->queue}}</h5>
-                        {{-- <div class="card-tools">
-                            <a href="#" wire:click="switchOrderStatus({{$order->id}}, 'in_progress')">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right-square-fill text-success mr-2" viewBox="0 0 16 16">
-                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z"/>
-                                </svg>
-                            </a>
-                        </div> --}}
-                    </div>
-                    <div class="card-body">
-                        @foreach ($order->orderItems as $item)
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" wire:change="switchOrderItemStatus({{$order->id}}, {{$item->id}})" type="checkbox" id="checkbox-{{$order->id}}-{{$item->id}}" {{$item->status === 'done' ? 'checked disabled' : ''}}>
-                                <label for="checkbox-{{$order->id}}-{{$item->id}}" class="custom-control-label">{{$item->food->name}} {{$item->quantity}}x</label>
-                            </div>
-                        @endforeach
+    <!-- Order Sections -->
+    <section class="content py-4">
+        <div class="container">
+            <div class="row gy-4">
+                <!-- Waiting Orders -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-warning text-dark">
+                            <h5 class="mb-0">Waiting</h5>
+                        </div>
+                        <div class="card-body" style="height: 400px; overflow-y: auto;">
+                            @foreach ($orders->where('status', 'waiting') as $order)
+                                <div class="order-card p-3 mb-3 border border-warning rounded">
+                                    <h6 class="fw-bold text-dark">Order #{{ $order->queue }}</h6>
+                                    <ul class="list-unstyled mb-2">
+                                        @foreach ($order->orderItems as $item)
+                                            <li class="d-flex justify-content-between align-items-center">
+                                                <span>{{ $item->food->name }} ({{ $item->quantity }}x)</span>
+                                                <input type="checkbox"
+                                                    wire:change="switchOrderItemStatus({{ $order->id }}, {{ $item->id }})"
+                                                    {{ $item->status === 'done' ? 'checked disabled' : '' }} />
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            @endforeach
-          </div>        
-        </div>
 
-        <div class="card card-row card-primary">
-          <div class="card-header">
-            <h3 class="card-title">
-              In Progress
-            </h3>
-          </div>
-          <div class="card-body">
-              @foreach ($orders->where('status', 'in_progress') as $order)
-                <div class="card card-info card-outline">
-                  <div class="card-header">
-                    <h5 class="card-title">Order {{$order->queue}}</h5>
-                    {{-- <div class="card-tools">
-                      <a href="#" wire:click="switchOrderStatus({{$order->id}}, 'waiting')">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-left-square-fill text-danger mr-2" viewBox="0 0 16 16">
-                          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12"/>
-                        </svg>
-                      </a>
-                      <a href="#" wire:click="switchOrderStatus({{$order->id}}, 'done')">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right-square-fill text-success mr-2 " viewBox="0 0 16 16">
-                          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z"/>
-                        </svg>
-                      </a>
-                    </div> --}}
-                  </div>
-                  <div class="card-body">
-                      @foreach ($order->orderItems as $item)
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" wire:change="switchOrderItemStatus({{$order->id}}, {{$item->id}})" type="checkbox" id="checkbox-{{$order->id}}-{{$item->id}}" {{$item->status === 'done' ? 'checked disabled' : ''}}>
-
-                            {{-- <input class="custom-control-input" type="checkbox" id="checkbox-{{$order->id}}-{{$item->id}}"> --}}
-                            <label for="checkbox-{{$order->id}}-{{$item->id}}" class="custom-control-label">{{$item->food->name}}</label>
-                        </div>               
-                      @endforeach
-                  </div>
+                <!-- In Progress Orders -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">In Progress</h5>
+                        </div>
+                        <div class="card-body" style="height: 400px; overflow-y: auto;">
+                            @foreach ($orders->where('status', 'in_progress') as $order)
+                                <div class="order-card p-3 mb-3 border border-info rounded">
+                                    <h6 class="fw-bold text-info">Order #{{ $order->queue }}</h6>
+                                    <ul class="list-unstyled mb-2">
+                                        @foreach ($order->orderItems as $item)
+                                            <li class="d-flex justify-content-between align-items-center">
+                                                <span>{{ $item->food->name }}</span>
+                                                <input type="checkbox"
+                                                    wire:change="switchOrderItemStatus({{ $order->id }}, {{ $item->id }})"
+                                                    {{ $item->status === 'done' ? 'checked disabled' : '' }} />
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
-              @endforeach
-          </div>
-        </div>
 
-        <div class="card card-row card-default">
-          <div class="card-header bg-info">
-            <h3 class="card-title">
-              Done
-            </h3>
-          </div>
-          <div class="card-body">
-            @foreach ($orders->where('status', 'done') as $order)
-            <div class="card card-info card-outline">
-                <div class="card-header">
-                  <h5 class="card-title">Order {{$order->queue}}</h5>
-                  <div class="card-tools">
-                    <a href="#" wire:click="switchOrderStatus({{$order->id}}, 'in_hand')">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right-square-fill text-success mr-2 " viewBox="0 0 16 16">
-                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z"/>
-                      </svg>
-                    </a>
-                  </div>
+                <!-- Done Orders -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">Done</h5>
+                        </div>
+                        <div class="card-body" style="height: 400px; overflow-y: auto;">
+                            @foreach ($orders->where('status', 'done') as $order)
+                                <div class="order-card p-3 mb-3 border border-success rounded">
+                                    <h6 class="fw-bold text-success">Order #{{ $order->queue }}</h6>
+                                    <ul class="list-unstyled mb-2">
+                                        @foreach ($order->orderItems as $item)
+                                            <li class="d-flex justify-content-between align-items-center">
+                                                <span>{{ $item->food->name }}</span>
+                                                <input type="checkbox"
+                                                    wire:change="switchOrderItemStatus({{ $order->id }}, {{ $item->id }})"
+                                                    {{ $item->status === 'done' ? 'checked disabled' : '' }} />
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    @foreach ($order->orderItems as $item)
-                      <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" wire:change="switchOrderItemStatus({{$order->id}}, {{$item->id}})" type="checkbox" id="checkbox-{{$order->id}}-{{$item->id}}" {{$item->status === 'done' ? 'checked disabled' : ''}}>
-                        <label for="checkbox-{{$order->id}}-{{$item->id}}" class="custom-control-label">{{$item->food->name}}</label>
-                      </div>                
-                    @endforeach
-                </div>
-              </div>
-          @endforeach
-          </div>
-        </div>
 
-        <div class="card card-row card-success">
-          <div class="card-header">
-            <h3 class="card-title">
-              In Hand
-            </h3>
-          </div>
-          <div class="card-body">
-              @foreach ($orders->where('status', 'in_hand') as $order)
-                <div class="card card-info card-outline">
-                  <div class="card-header">
-                    <h5 class="card-title">Order {{$order->queue}}</h5>
-                    {{-- <div class="card-tools">
-                      <a href="#" wire:click="switchOrderStatus({{$order->id}}, 'done')">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-left-square-fill text-danger mr-2" viewBox="0 0 16 16">
-                          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12"/>
-                        </svg>
-                      </a>
-                      <a href="#" wire:click="switchOrderStatus({{$order->id}}, 'completed')">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-caret-right-square-fill text-success mr-2 " viewBox="0 0 16 16">
-                          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z"/>
-                        </svg>
-                      </a>
-                    </div> --}}
-                  </div>
-                  <div class="card-body">
-                      @foreach ($order->orderItems as $item)
-                        <div class="custom-control custom-checkbox">
-                          <input class="custom-control-input" wire:change="switchOrderItemStatus({{$order->id}}, {{$item->id}})" type="checkbox" id="checkbox-{{$order->id}}-{{$item->id}}" {{$item->status === 'done' ? 'checked disabled' : ''}}>
-
-                          {{-- <input class="custom-control-input" type="checkbox" id="checkbox-{{$order->id}}-{{$item->id}}"> --}}
-                          <label for="checkbox-{{$order->id}}-{{$item->id}}" class="custom-control-label">{{$item->food->name}}</label>
-                        </div>                    
-                      @endforeach
-                  </div>
+                <!-- In Hand Orders -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0">In the waiters</h5>
+                        </div>
+                        <div class="card-body" style="height: 400px; overflow-y: auto;">
+                            @foreach ($orders->where('status', 'in_hand') as $order)
+                                <div class="order-card p-3 mb-3 border border-dark rounded">
+                                    <h6 class="fw-bold text-dark">Order #{{ $order->queue }}</h6>
+                                    <ul class="list-unstyled mb-2">
+                                        @foreach ($order->orderItems as $item)
+                                            <li class="d-flex justify-content-between align-items-center">
+                                                <span>{{ $item->food->name }}</span>
+                                                <input type="checkbox"
+                                                    wire:change="switchOrderItemStatus({{ $order->id }}, {{ $item->id }})"
+                                                    {{ $item->status === 'done' ? 'checked disabled' : '' }} />
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
-              @endforeach
-          </div>
+            </div>
         </div>
-      </div>
     </section>
 </div>

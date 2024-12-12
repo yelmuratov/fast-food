@@ -1,5 +1,4 @@
-<div>
-    <div class="content-wrapper">
+<div class="px-4">
         <section class="content py-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Attendance</h2>
@@ -80,7 +79,6 @@
             @endif
 
         </section>
-    </div>
 </div>
 
 <!-- Bootstrap Bundle with Popper.js -->
